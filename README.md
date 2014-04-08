@@ -1,4 +1,4 @@
-BasicWorkTimer
+Basic Work Timer
 ==============
 
-Chrome Plugin to track tasks.
+Old plugin im going to dust off and get going again.
