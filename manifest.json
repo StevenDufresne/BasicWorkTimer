@@ -1,0 +1,22 @@
+{
+  "name": "Taskman",
+  "version": "1.0",
+  "description": "Remember the work timer",
+  "background": { 
+    "persistence": "true"
+  },
+
+  "permissions" : [
+    "cookies",
+    "tabs",
+    "http://*/",
+    "https://*/"
+  ],
+  
+  "browser_action": {
+    "default_icon": "16-icon.png",
+    "default_popup": "popup.html"
+  },
+
+  "manifest_version": 2
+}

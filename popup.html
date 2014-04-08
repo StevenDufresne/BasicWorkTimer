@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Get opened tabs URLs</title>
+<style>
+
+html {
+	background: #bbb;
+	padding-bottom: 40px;
+}
+body{
+	padding: 5px; margin: 0;
+	font-family: arial, sans-serif;
+	font-size: 14px;
+	width: 500px;
+	height: 350px;
+}
+.container {
+	background: #fff;
+	width: 100%;
+}
+
+.tools {
+	position: fixed; 
+	bottom: 5px;
+	right: 5px;
+	width: 100%;
+	background: rgba(0,0,0,0.3);
+}
+.tools button {
+	float: right;
+}
+
+/** li **/
+ ul {
+ 	margin: 0; padding: 0;
+ 	border-radius: 5px;
+ 	overflow: hidden;
+ 	border: 1px solid #e1e1e1;
+ }
+li {
+	list-style: none;
+	clear: both;
+	height: 50px;
+	padding: 0 5px;
+	background: #ECECEC;
+	border-bottom: 1px solid #dadada;
+}
+.add-task {
+	background: #cfe7fa;
+}
+
+li > span {
+	float: left;
+	line-height: 50px;
+	font-size: 110%;
+}
+.task-name {
+	float: right;
+}
+
+.time {
+	font-size: 26px;
+	vertical-align: middle;
+	margin-right: 20px;
+}
+
+button {
+	border: 0;
+	padding: 10px 20px;
+	color: #fff;
+	background: #536270;
+	border-bottom: 2px solid #4A5561;
+	border-radius: 2px;
+
+}
+button:active {
+	background: #4A5561;
+	color: #eee;
+}
+li button {
+	color:transparent;
+	position: relative;
+	font-size: 1px;
+	-webkit-user-select: none;
+}
+li button:active {
+	color: transparent;
+} 
+
+li button:after{
+	content: '';
+	position: absolute;
+
+
+}
+
+.startTimer, .stopTimer, .resetTimer { }
+.startTimer:after {
+	height: 0;
+	width: 0;
+	border-left: 8px solid #59e41c;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	left: 20px;
+	top: 6px;
+
+}
+.stopTimer:after {
+	height: 9px;
+	width: 9px;
+	background: #ED5153;
+	left: 18px;
+	top: 8px;
+}
+
+
+.action {
+	background: #ED5153;
+	border-bottom: 2px solid #E33E41;
+}
+.action:active {
+	background: #E33E41;
+		padding: 9px 19px;
+		margin-right: 3px;
+		margin-left: 3px;
+}
+
+
+</style>
+
+</head>
+<body>
+	<div class="container">
+		<ul id="ulNode">
+			<li class="add-task">
+				<a href="#" id="addButton"> Add Task</a>
+			</li>
+		</ul>
+
+	</div>
+<div class="tools">
+	<button class="f-left action">Load</button>
+	<button class="f-right action">Save As</button>
+</div>
+<script id="listTemplate" type="text/listTemplate">
+	<span>{{name}}</span>
+	<div class="task-name">
+		<span class="time">{{time}}</span>
+		<button class="startTimer">Start</button>
+		<button class="stopTimer" disabled>stop</button>
+		<button class="resetTimer">reset</button>
+		<button class="deleteTimer">delete</button>
+	</div>
+</script>
+<script src="timerObject.js"></script>
+<script src="listItem.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
