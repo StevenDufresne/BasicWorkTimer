@@ -1,12 +1,14 @@
-var ListItem = function (domItem) {
-  var contain = document.getElementById(domItem),
+var ListItem = function (cookieTitle) {
+  var self = this,
+      contain = document.getElementById(cookieTitle),
       startButton = '',
       stopButton = '',
       resetButton = '',
       deleteButton = '',
       output = '',
-      cookieName =  Math.floor(Math.random() *1000) + contain.firstChild.nextSibling.innerHTML,
-      thisTimer = new TimerObject(contain.children[1].children[0]);
+      cookieName =  (cookieTitle !== undefined) ? cookieTitle : Math.floor(Math.random() *1000) + contain.firstChild.nextSibling.innerHTML,
+      thisTimer = new TimerObject(contain.children[1].children[0]),
+      thisDeleted = false;
 
     getButtons();
     
@@ -24,7 +26,8 @@ var ListItem = function (domItem) {
     stopButton.disabled = true
     thisTimer.stop();
 
-    chrome.cookies.set({ url: "http://new.com", name: cookieName, storeId: cookieName, value: thisTimer.getTime() + '.' + '0.' + (thisTimer.startTimeStamp).toString() , expirationDate: (new Date().getTime()/1000) + 3600 },  function (ev) {})
+    chrome.cookies.set({ url: "http://poop.com/", name: cookieName, storeId: "0", value: thisTimer.getTime() + '.' + '0.' + (thisTimer.startTimeStamp).toString() , expirationDate: (new Date().getTime()/1000) + 3600 }, function (cookie) {
+    });
 
   });
 
@@ -35,26 +38,42 @@ var ListItem = function (domItem) {
     output.innerHTML = thisTimer.getTime();
   });
 
+  deleteButton.addEventListener('click', function () {
+    thisTimer.stop();
+
+    chrome.cookies.remove({url: "http://poop.com/", name: cookieName, storeId: "0"}, function (deleted) {
+      console.log(deleted);
+
+      thisDeleted = true;
+    });
+
+  });
+
+
   window.addEventListener('blur', function () {
-       chrome.cookies.set({ url: "http://new.com", name: cookieName, storeId: cookieName, value: thisTimer.getTime() + '.' + '1.' + (thisTimer.startTimeStamp).toString() , expirationDate: (new Date().getTime()/1000) + 3600 },  function (ev) {})
+    if(!thisDeleted) {
+      chrome.cookies.set({ url: "http://poop.com/", name: cookieName, storeId: "0", value: thisTimer.getTime() + '.' + '1.' + (thisTimer.startTimeStamp).toString() , expirationDate: (new Date().getTime()/1000) + 3600 },  function (ev) {})
+    }
    })
 
   function getButtons () {
+      var elem = contain.children[1];
 
-    for (var i = 0; i < contain.children[1].children.length; i +=1) {
+    for (var i = 0; i < elem.children.length; i +=1) {
 
-      if(contain.children[1].children[i].className === "startTimer") {
 
-          startButton = contain.children[1].children[i];
+      if(elem.children[i].className === "startTimer") {
 
-      } else if (contain.children[1].children[i].className === "stopTimer") {
-        stopButton = contain.children[1].children[i];
+          startButton = elem.children[i];
 
-      } else if (contain.children[1].children[i].className === "resetTimer") {
-        resetButton = contain.children[1].children[i];
+      } else if (elem.children[i].className === "stopTimer") {
+        stopButton = elem.children[i];
 
-      } else if (contain.children[1].children[i].className === "deleteTimer") {
-        deleteButton = contain.children[1].children[i];
+      } else if (elem.children[i].className === "resetTimer") {
+        resetButton = elem.children[i];
+
+      } else if (elem.children[i].className === "deleteTimer") {
+        deleteButton = elem.children[i];
 
       } 
     } 

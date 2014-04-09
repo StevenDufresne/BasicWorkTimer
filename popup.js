@@ -18,41 +18,47 @@ var BWT = {
 
       // DOM Events
       self.addTaskButton.addEventListener('click', function () {
-        self.addToDOM();
+        self.createTask();
       });
 
 
     },
 
-    addToDOM : function ( ID, existingTime, isRunning, existingTitle ) {
-      var template = document.getElementById("listTemplate").innerHTML,
-        tempLI = document.createElement('li'),
-        mainUL =document.getElementById("ulNode"),
-        frag = '',
-        taskTitle = existingTitle || "New Task",
-        time = existingTime || "0:00";
+    createTask : function ( ID, existingTime, isRunning, existingTitle ) {
 
-        tempLI.id = "li" + total;
+        var taskTitle = existingTitle || "New Task", 
+            displayTime = existingTime || "0:00";
 
-        frag = template.replace(/\{\{name\}\}/, taskTitle)
-                      .replace(/\{\{time\}\}/, time);
-
-        tempLI.innerHTML = frag;
-        mainUL.appendChild(tempLI);
+        this.addToDom(taskTitle, displayTime);
 
         //create a new list item
-        new ListItem('li' + total);
+        new ListItem(taskTitle);
         total++;
 
+  },
+  addToDom: function (taskTitle, displayTime) {
+    var template = document.getElementById("listTemplate").innerHTML,
+      tempLI = document.createElement('li'),
+      mainUL =document.getElementById("ulNode"),
+      frag = '';
+
+      frag = template.replace(/\{\{name\}\}/, taskTitle)
+            .replace(/\{\{time\}\}/, displayTime);
+
+      tempLI.id = taskTitle;
+      tempLI.innerHTML = frag;
+      mainUL.appendChild(tempLI);
   },
 
   getHistory: function (){
     var self = this;
-   chrome.cookies.getAll({ url: "http://new.com" }, function (cookies) {
+
+
+   chrome.cookies.getAll({ url: "http://poop.com/" }, function (cookies) {
   
+
     for(var i = 0; i < cookies.length; i+=1) {
       var splitValue = cookies[i].value.split('.')
-
 
       if(splitValue[1] === "1") {
         var curTime = new Date().getTime(),
@@ -61,14 +67,11 @@ var BWT = {
         date = new Date(null),
         test = date.toTimeString().substr(3, 5);
 
-        date.setSeconds(time);
-
-
-        self.addToDOM( cookies[i].storeId, test, splitValue[1], cookies[i].name);
+        self.createTask( cookies[i].storeId, splitValue[0], splitValue[1], cookies[i].name);
 
       } else {
 
-        self.addToDOM( cookies[i].storeId, splitValue[0], splitValue[1], cookies[i].name);
+        self.createTask( cookies[i].storeId, splitValue[0], splitValue[1], cookies[i].name);
       }
 
     }
