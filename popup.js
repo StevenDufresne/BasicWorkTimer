@@ -27,12 +27,14 @@ var BWT = {
     createTask : function ( ID, existingTime, isRunning, existingTitle ) {
 
         var taskTitle = existingTitle || "New Task", 
-            displayTime = existingTime || "0:00";
+            displayTime = existingTime || "00:00:00";
 
         this.addToDom(taskTitle, displayTime);
 
         //create a new list item
-        new ListItem(taskTitle);
+        var obj = new ListItem(taskTitle);
+
+        obj.setTime(displayTime);
         total++;
 
   },

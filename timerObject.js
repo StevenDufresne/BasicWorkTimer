@@ -3,9 +3,10 @@ function TimerObject (output) {
   this.seconds = 0;
   this.minutes = 0;
   this.hours = 0;
-  this.startTimeStamp = 0;;
-  this.totalSeconds = 0;;
+  this.startTimeStamp = 0;
+  this.totalSeconds = 0;
   this.output = output;
+
 }
 
 TimerObject.prototype.start = function () {
@@ -21,12 +22,29 @@ TimerObject.prototype.getTime = function () {
   var timeFrag = '';
 
   (this.hours > 0 ) ? timeFrag += this.hours + ':' : timeFrag += '';
+
   timeFrag += this.minutes;
+
+  
   (this.seconds < 10 ) ? timeFrag += ':0' + this.seconds : timeFrag += ':' + this.seconds;
 
   return timeFrag;
 
 }
+
+TimerObject.prototype.setTime = function (timeString) {
+  var splitTime = timeString.split(":");
+
+  console.log(timeString);
+
+  this.hours = parseInt(splitTime[0]);
+  this.minutes = parseInt(splitTime[1]);
+  this.seconds = parseInt(splitTime[2]);
+
+  console.log(splitTime[2])
+
+}
+
 
 TimerObject.prototype.resetTime = function () {
   this.hours = 0;

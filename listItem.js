@@ -42,11 +42,8 @@ var ListItem = function (cookieTitle) {
     thisTimer.stop();
 
     chrome.cookies.remove({url: "http://poop.com/", name: cookieName, storeId: "0"}, function (deleted) {
-      console.log(deleted);
-
       thisDeleted = true;
     });
-
   });
 
 
@@ -54,7 +51,7 @@ var ListItem = function (cookieTitle) {
     if(!thisDeleted) {
       chrome.cookies.set({ url: "http://poop.com/", name: cookieName, storeId: "0", value: thisTimer.getTime() + '.' + '1.' + (thisTimer.startTimeStamp).toString() , expirationDate: (new Date().getTime()/1000) + 3600 },  function (ev) {})
     }
-   })
+  })
 
   function getButtons () {
       var elem = contain.children[1];
@@ -78,5 +75,7 @@ var ListItem = function (cookieTitle) {
       } 
     } 
   }
+
+  return thisTimer;
 }
 
