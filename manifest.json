@@ -10,7 +10,8 @@
     "cookies",
     "tabs",
     "http://*/",
-    "https://*/"
+    "https://*/",
+    "storage"
   ],
   
   "browser_action": {

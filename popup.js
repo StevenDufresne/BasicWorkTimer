@@ -33,8 +33,15 @@ var BWT = {
 
         //create a new list item
         var obj = new ListItem(taskTitle);
-
         obj.setTime(displayTime);
+
+        console.log(isRunning)
+
+        if(isRunning) {
+
+          obj.start()
+        }
+
         total++;
 
   },
